@@ -1,8 +1,3 @@
-// dirty hack to vertically align legends across multiple charts
-// however, without monospace font, it's still not perfectly aligned
-// waiting for https://github.com/chartjs/Chart.js/discussions/9890
-const LEGEND_CHARACTERS = 20
-
 // https://hihayk.github.io/scale/#4/6/50/80/-51/67/20/14/276749/39/103/73/white
 const baseColors = ['#112836', '#163B43', '#1C4F4D', '#215B4C', '#276749', '#437C57', '#5F9167', '#7DA67C', '#9FBA98', '#BFCEB5', '#DCE2D3']
 
@@ -33,7 +28,7 @@ topNPickers.sort(((a, b) => parseInt(a.attributes['data-entity'].value) - parseI
 topNPickers.forEach(e => {
     const idx = parseInt(e.attributes['data-entity'].value)
     e.max = data[idx].length
-    e.value = Math.min(e.max, 9)
+    e.value = Math.min(e.max, 27)
 })
 
 let charts = []
@@ -73,12 +68,6 @@ function draw(subselection) {
                 footer: () => key === 'projects' ? 'Click for details' : null
             }
         }
-    }
-
-    function filterLegendItem(item) {
-        item.text = item.text.length > LEGEND_CHARACTERS ? item.text.slice(0, LEGEND_CHARACTERS - 3).padEnd(LEGEND_CHARACTERS, '.') : item.text
-        item.text = item.text.padEnd(LEGEND_CHARACTERS + 3)
-        return true
     }
 
     function shouldUpdate(index) {
@@ -173,9 +162,6 @@ function draw(subselection) {
                     tooltip: getTooltipOptions('operatingSystems'),
                     legend: {
                         position: 'right',
-                        labels: {
-                            filter: filterLegendItem
-                        },
                     },
                 },
                 maintainAspectRatio: false,
@@ -210,9 +196,6 @@ function draw(subselection) {
                     tooltip: getTooltipOptions('editors'),
                     legend: {
                         position: 'right',
-                        labels: {
-                            filter: filterLegendItem
-                        },
                     },
                 },
                 maintainAspectRatio: false,
@@ -247,9 +230,6 @@ function draw(subselection) {
                     tooltip: getTooltipOptions('languages'),
                     legend: {
                         position: 'right',
-                        labels: {
-                            filter: filterLegendItem
-                        },
                         title: {
                             display: true,
                         }
@@ -287,9 +267,6 @@ function draw(subselection) {
                     tooltip: getTooltipOptions('machines'),
                     legend: {
                         position: 'right',
-                        labels: {
-                            filter: filterLegendItem
-                        },
                     },
                 },
                 maintainAspectRatio: false,
@@ -324,9 +301,6 @@ function draw(subselection) {
                     tooltip: getTooltipOptions('labels'),
                     legend: {
                         position: 'right',
-                        labels: {
-                            filter: filterLegendItem
-                        },
                     },
                 },
                 maintainAspectRatio: false,
