@@ -1,8 +1,3 @@
-// dirty hack to vertically align legends across multiple charts
-// however, without monospace font, it's still not perfectly aligned
-// waiting for https://github.com/chartjs/Chart.js/discussions/9890
-const LEGEND_CHARACTERS = 20
-
 const projectsCanvas = document.getElementById('chart-projects')
 const osCanvas = document.getElementById('chart-os')
 const editorsCanvas = document.getElementById('chart-editor')
@@ -36,7 +31,7 @@ topNPickers.sort(((a, b) => parseInt(a.attributes['data-entity'].value) - parseI
 topNPickers.forEach(e => {
     const idx = parseInt(e.attributes['data-entity'].value)
     e.max = data[idx].length
-    e.value = Math.min(e.max, 9)
+    e.value = Math.min(e.max, 18)
 })
 
 let charts = []
@@ -64,8 +59,6 @@ String.prototype.toHHMMSS = function () {
 
 function filterLegendItem(item) {
     if (!item || !item.text) return false;
-    item.text = item.text.length > LEGEND_CHARACTERS ? item.text.slice(0, LEGEND_CHARACTERS - 3).padEnd(LEGEND_CHARACTERS, '.') : item.text
-    item.text = item.text.padEnd(LEGEND_CHARACTERS + 3)
     return true
 }
 
